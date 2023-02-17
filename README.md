@@ -7,7 +7,7 @@ The repo demonstrates using a [React.js](https://reactjs.org/) front-end for a [
 Start by cloning this repository to your local environment and entering the created directory:
 
 ```bash
-git clone losant-react-experience
+git clone https://github.com/Losant/losant-react-experience.git
 cd losant-react-experience
 ```
 
