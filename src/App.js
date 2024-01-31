@@ -8,6 +8,7 @@ import {
 } from './router';
 import './App.scss';
 
+import About from './containers/About';
 import LogIn from './containers/LogIn';
 import LogOut from './containers/LogOut';
 import Profile from './containers/Profile';
@@ -32,6 +33,7 @@ const App = () => {
         </Route>
         <Route element={<PublicRoutes />}>
           {/* Routes that do not require authentication go down here */}
+          <Route path="/about" element={<About />} />
           <Route path="/login" element={<LogIn />} />
         </Route>
         <Route path="*" element={<FourZeroFour />} />
