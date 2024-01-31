@@ -17,6 +17,8 @@ Next, install the dependencies:
 npm install
 ```
 
+### Environment Variables
+
 Now, in the root of the project, create a `.env` file to a new file using the included `.env.example` as a template. The file has the following values in it, which must be modified for your specific Losant application:
 
 - `PUBLIC_URL`: This is the URL for where the built React files will be publicly available. Most users prefer to serve these out of Losant's [Application Files](https://docs.losant.com/applications/files/) with a workflow that downloads and returns the `index.html` contents for any non-API-endpoint request to your [Experience Domain](https://docs.losant.com/experiences/domains/). The Template Library entry that corresponds to this repo takes this same approach. For example, given the placeholder value of `https://files.onlosant.com/<APPLICATION_ID>/react-bundles/<EXPERIENCE_VERSION_NAME>` ...
@@ -26,18 +28,9 @@ Now, in the root of the project, create a `.env` file to a new file using the in
   - Replace `<APPLICATION_ID>` with the ID of the Losant application backing this interface.
 - `REACT_APP_AUTH_COOKIE_NAME`: This is the name of the cookie that holds the user's authentication token. This setting is optional; not providing a value defaults to "authToken".
 
-### Included Packages
-
-This demo repo utilizes the following [npm](https://www.npmjs.com/) packages in addition to those included by Create React App:
-
-- [`cookie`](https://www.npmjs.com/package/cookie): Serializes the user's auth token for storage as a browser cookie, and parses that cookie to retrieve the auth token in subsequent sessions.
-- [`react-bootstrap`](https://www.npmjs.com/package/react-bootstrap): A set of React components based on the popular [Twitter Bootstrap](https://getbootstrap.com/) UI framework.
-- [`bootstrap`](https://www.npmjs.com/package/bootstrap): A peer dependency of `react-bootstrap`; this provides the necessary SASS files that style the components.
-- [`react-router-dom`](https://www.npmjs.com/package/react-router-dom): Routes the user through the various pages of the experience, including redirecting signed-out users attempting to view authenticated pages to the login page.
-
 ## Developing
 
-To develop the user interface in your local environment, start by creating a `.env.local` in the project root, which will override any values defined in your `.env` file. Included is a `.env.local.example` file; you may simply change the name of this file to `.env.local` to begin development.
+To develop the user interface in your local environment, start by creating a `.env.development` in the project root, which will override any values defined in your `.env` file. Included is a `.env.development.example` file; you may simply change the name of this file to `.env.development` to begin developing locally.
 
 At the very least, the file should include this line:
 
@@ -53,7 +46,7 @@ Then, to run the interface locally, execute the following command:
 npm run start
 ```
 
-This will make the interface available at `http://localhost:3000`. Requests initiated by the interface will go to the `REACT_APP_API_BASE` environment variable defined in either `.env.local` or `.env`.
+This will make the interface available at `http://localhost:3000`. Requests initiated by the interface will go to the `REACT_APP_API_BASE` environment variable defined in either `.env.development` or `.env`.
 
 ## Building
 
@@ -91,10 +84,11 @@ Alternatively, the files can be manually uploaded to Application Files using the
 2. Create a `/react-bundles` directory if necessary.
 3. If a directory matching the name of your Experience Version already exists in the `/react-bundles` directory, delete it.
 4. Create a new directory matching your Experience Version name (i.e. `develop`).
-5. Drag all of the files in your local `/build` directory EXCEPT the `/css` and `/js` directories.
-6. Within your version directory in Application Files, create new directories `css` and `js`.
-7. Navigate to the `js` directory, and drag all of the files in your local `/build/js` directory into it.
-8. Navigate to the `css` directory, and drag all of the files in your local `/build/css` directory into it.
+5. Drag all of the files in your local `/build` directory EXCEPT the `/static` directory into the directory you just created.
+6. Create a `/static` directory within the version directory you created, alongside the files you uploaded.
+7. Create `/css` and `/js` directories within the `/react-bundles/<versionName>/static` directory.
+8. Navigate to the `js` directory, and drag all of the files in your local `/build/static/js` directory into it.
+9. Navigate to the `css` directory, and drag all of the files in your local `/build/static/css` directory into it.
 
 ## Routes
 
@@ -122,8 +116,17 @@ There are two [context providers](https://reactjs.org/docs/context.html) include
 
 The context providers expose methods for initiating API calls through the API client; for informing the interface about the current status of in-progress requests; and for holding, normalizing, and exposing the response data from the requests that is then consumed by the interface.
 
+## Included Packages
+
+This demo repo utilizes the following [npm](https://www.npmjs.com/) packages in addition to those included by Create React App:
+
+- [`cookie`](https://www.npmjs.com/package/cookie): Serializes the user's auth token for storage as a browser cookie, and parses that cookie to retrieve the auth token in subsequent sessions.
+- [`react-bootstrap`](https://www.npmjs.com/package/react-bootstrap): A set of React components based on the popular [Twitter Bootstrap](https://getbootstrap.com/) UI framework.
+- [`bootstrap`](https://www.npmjs.com/package/bootstrap): A peer dependency of `react-bootstrap`; this provides the necessary SASS files that style the components.
+- [`react-router-dom`](https://www.npmjs.com/package/react-router-dom): Routes the user through the various pages of the experience, including redirecting signed-out users attempting to view authenticated pages to the login page.
+
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). For additional details on running locally, optimizing, building, and deploying, please visit the [Create React App repo](https://github.com/facebook/create-react-app).
 
-Copyright 2022 Losant IoT. [MIT License](LICENSE.txt).
+Copyright 2024 Losant IoT. [MIT License](LICENSE.txt).
